@@ -1,0 +1,41 @@
+name: Refresh Command Center
+
+on:
+  schedule:
+    # 11:00 UTC = 7:00am US Eastern (EDT) / 6:00am (EST). Adjust as you like.
+    - cron: "0 11 * * *"
+  workflow_dispatch: {}   # lets you run it on demand from the Actions tab
+
+permissions:
+  contents: write          # allow the job to commit the rebuilt index.html
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild dashboard from Asana
+        env:
+          ASANA_TOKEN: ${{ secrets.ASANA_TOKEN }}
+          ASANA_WORKSPACE_GID: ${{ secrets.ASANA_WORKSPACE_GID }}   # optional
+          DASHBOARD_TZ: America/New_York
+        run: python build.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Daily dashboard refresh ($(TZ=America/New_York date +%Y-%m-%d))"
+            git push
+          fi
