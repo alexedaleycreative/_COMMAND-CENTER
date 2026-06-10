@@ -798,4 +798,13 @@ JOBS.forEach(([name,url,icon])=>{
           + dt(t.start,'start') + dt(t.due,'due')
           + '<td class="mt-num">'+(t.est!=null?t.est:'<span class="mt-muted">\u2014</span>')+'</td>'
           + '<td class="mt-num">'+(t.pct!=null?Math.round(t.pct*100)+'%':'<span class="mt-muted">\u2014</span>')+'</td></tr>';
-      }).j
+      }).join('');
+      return '<div class="mt-card"><div class="mt-card-head"><span class="mt-proj">'+esc(gp.project)+'</span>'+tag(gp.portfolio)+'</div>'
+        + '<table><thead><tr><th>Task</th><th>Start</th><th>Due</th><th class="mt-num">Est Hrs</th><th class="mt-num">% Done</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    }).join('')+'</div>';
+  }
+  function sec(cls,label,arr){ return '<div class="mt-section '+cls+'"><div class="mt-head"><span class="mt-dot"></span><h3>'+label+'</h3><span class="mt-badge">'+arr.length+'</span></div>'+cards(arr)+'</div>'; }
+  var el=document.getElementById('mytasksBody');
+  if(el){ el.innerHTML = sec('mt-past','Past Due',MY_TASKS_DATA.pastDue) + sec('mt-due','Due Today',MY_TASKS_DATA.dueToday) + sec('mt-prog','In Progress',MY_TASKS_DATA.inProgress); }
+  var st=document.getElementById('mt-stamp');
+  if(st){ var p=MY_TASKS_DATE.split('-'); st.textContent=' \u00b7 updated '+new Date(+p[0],
