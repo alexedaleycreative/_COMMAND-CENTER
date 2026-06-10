@@ -130,8 +130,8 @@ CSS = """
   #mytasks .mt-due .mt-dot{background:#0171BF;}
   #mytasks .mt-prog .mt-dot{background:#00B050;}
   #mytasks .mt-cards{display:flex;flex-direction:column;gap:12px;}
-  #mytasks .mt-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:var(--shadow);}
-  #mytasks .mt-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;font-weight:600;font-size:12.5px;letter-spacing:.01em;}
+  #mytasks .mt-card{background:#fff;border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:var(--shadow);}
+  #mytasks .mt-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;font-weight:600;font-size:12.5px;letter-spacing:.01em;background:#fafbfc;color:var(--ink);border-bottom:1px solid var(--line);}
   #mytasks .mt-proj{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   #mytasks .mt-tag{flex:none;font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.55);white-space:nowrap;}
   #mytasks table{width:100%;border-collapse:collapse;font-size:12.5px;}
@@ -139,11 +139,13 @@ CSS = """
   #mytasks tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;}
   #mytasks tbody tr:last-child td{border-bottom:none;}
   #mytasks th.mt-num,#mytasks td.mt-num{text-align:center;}
-  #mytasks td.mt-num{vertical-align:middle;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;color:var(--ink);}
+  #mytasks thead th:nth-child(2),#mytasks thead th:nth-child(3){text-align:center;}
+  #mytasks tr.mt-sub td.mt-dt,#mytasks tr.mt-sub td.mt-num{padding-top:26px;}
+  #mytasks td.mt-num{vertical-align:top;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;color:var(--muted);}
   #mytasks .mt-parent{font-size:11px;font-weight:400;color:var(--muted);line-height:1.3;margin-bottom:3px;}
   #mytasks .mt-name a{color:var(--ink);font-weight:500;}
   #mytasks .mt-name a:hover{color:var(--teal);text-decoration:underline;}
-  #mytasks .mt-dt{white-space:nowrap;color:var(--muted);font-weight:500;}
+  #mytasks .mt-dt{white-space:nowrap;color:var(--muted);font-weight:500;text-align:center;}
   #mytasks .mt-dt.start-today{color:#1f8a4c;}
   #mytasks .mt-dt.due-today{color:#E23B2E;}
   #mytasks .mt-muted{color:#b9c0c1;font-weight:500;}
@@ -183,16 +185,15 @@ SCRIPT = """
   function cards(arr){
     if(!arr.length) return '<div class="mt-empty">No tasks here right now.</div>';
     return '<div class="mt-cards">'+group(arr).map(function(gp){
-      var col=colorFor(gp.project), txt=textOn(col);
       var rows=gp.tasks.map(function(t){
         var nameCell = (t.parent ? '<div class="mt-parent">\\u21b3 '+esc(t.parent)+'</div>' : '')
           + '<a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.name)+'</a>';
-        return '<tr><td class="mt-name">'+nameCell+'</td>'
+        return '<tr'+(t.parent?' class="mt-sub"':'')+'><td class="mt-name">'+nameCell+'</td>'
           + dt(t.start,'start') + dt(t.due,'due')
           + '<td class="mt-num">'+(t.est!=null?t.est:'<span class="mt-muted">\\u2014</span>')+'</td>'
           + '<td class="mt-num">'+(t.pct!=null?Math.round(t.pct*100)+'%':'<span class="mt-muted">\\u2014</span>')+'</td></tr>';
       }).join('');
-      return '<div class="mt-card" style="border-left-color:'+col+'"><div class="mt-card-head" style="background:'+col+';color:'+txt+'"><span class="mt-proj">'+esc(gp.project)+'</span>'+tag(gp.portfolio)+'</div>'
+      return '<div class="mt-card"><div class="mt-card-head"><span class="mt-proj">'+esc(gp.project)+'</span>'+tag(gp.portfolio)+'</div>'
         + '<table><thead><tr><th>Task</th><th>Start</th><th>Due</th><th class="mt-num">Est Hrs</th><th class="mt-num">% Done</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
     }).join('')+'</div>';
   }
