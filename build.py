@@ -235,8 +235,4 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"Wrote {OUT}: {today} | past {len(data['pastDue'])} "
-          f"due {len(data['dueToday'])} inprog {len(data['inProgress'])} "
-          f"| portfolios={len(portmap)}")
-
-if __name__ == "__main__":
-    main()
+          f"due {len(data['dueTo

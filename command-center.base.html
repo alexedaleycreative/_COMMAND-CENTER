@@ -104,10 +104,10 @@
     border-bottom:1px dashed var(--line);padding-bottom:14px;margin-bottom:16px;
   }
   .block-icon{
-    width:26px;height:26px;flex:none;
+    width:46px;height:46px;flex:none;
     display:flex;align-items:center;justify-content:center;
   }
-  .block-icon svg{width:24px;height:24px;fill:var(--ink);stroke:none;}
+  .block-icon svg{width:42px;height:42px;fill:var(--ink);stroke:none;}
   .block h2{
     margin:0;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
     font-size:13.5px;color:var(--teal);
@@ -451,10 +451,20 @@
         </div>
       </section>
 
-    </div><!-- /left col -->
-
-    <!-- ========== RIGHT COLUMN ========== -->
-    <div class="col">
+      <!-- MEMOIR -->
+      <section class="block" id="memoir">
+        <div class="block-head">
+          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg></div>
+          <div><h2>Memoir</h2><p class="sub">Writing project and skills</p></div>
+        </div>
+        <div class="chips">
+          <button class="skill-chip" onclick="copyText('Evaluate this memoir scene: [paste scene]',this)">memoir-scene-evaluator <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <button class="skill-chip" onclick="copyText('Write a scene for my memoir: [describe the scene]',this)">memoir-scene-writer <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <button class="skill-chip" onclick="copyText('Summarize this scene for my storyboard and suggest chapter titles: [paste scene]',this)">memoir-storyboard-summary <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <a class="skill-chip" href="https://claude.ai/project/019ae643-746a-70f9-bbc4-fd7b45937f49" target="_blank" rel="noopener">My Memoir Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
+        </div>
+        <p class="proc-note">Click a skill to copy its trigger phrase, then paste it into the matching Claude project and fill in the <b>[bracketed]</b> part.</p>
+      </section>
 
       <!-- WORK SEARCH -->
       <section class="block" id="worksearch">
@@ -477,6 +487,11 @@
         </div>
       </section>
 
+    </div><!-- /left col -->
+
+    <!-- ========== RIGHT COLUMN ========== -->
+    <div class="col">
+
       <!-- CURRENT CLIENTS -->
       <section class="block" id="clients">
         <div class="block-head">
@@ -492,7 +507,6 @@
         </div>
         <div class="client-meta">
           <div><span class="ml">Contract End Date</span><span class="mv">April 2027</span></div>
-          <div><span class="ml">Rate</span><span class="mv">$46/HR</span></div>
           <div><span class="ml">Taxes</span><span class="mv">W2</span></div>
           <div><span class="ml">Pay Frequency</span><span class="mv">Weekly</span></div>
         </div>
@@ -532,7 +546,6 @@
         </div>
         <div class="client-meta">
           <div><span class="ml">Contract End Date</span><span class="mv">December 2026</span></div>
-          <div><span class="ml">Rate</span><span class="mv">$70/HR</span></div>
           <div><span class="ml">Taxes</span><span class="mv">C2C</span></div>
           <div><span class="ml">Pay Frequency</span><span class="mv">Net30</span></div>
         </div>
@@ -559,21 +572,6 @@
             <div class="track-item"><input type="checkbox"><span class="track-pending">Time Tracking System</span></div>
           </div>
         </div>
-      </section>
-
-      <!-- MEMOIR -->
-      <section class="block" id="memoir">
-        <div class="block-head">
-          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg></div>
-          <div><h2>Memoir</h2><p class="sub">Writing project and skills</p></div>
-        </div>
-        <div class="chips">
-          <button class="skill-chip" onclick="copyText('Evaluate this memoir scene: [paste scene]',this)">memoir-scene-evaluator <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <button class="skill-chip" onclick="copyText('Write a scene for my memoir: [describe the scene]',this)">memoir-scene-writer <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <button class="skill-chip" onclick="copyText('Summarize this scene for my storyboard and suggest chapter titles: [paste scene]',this)">memoir-storyboard-summary <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <a class="skill-chip" href="https://claude.ai/project/019ae643-746a-70f9-bbc4-fd7b45937f49" target="_blank" rel="noopener">My Memoir Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-        </div>
-        <p class="proc-note">Click a skill to copy its trigger phrase, then paste it into the matching Claude project and fill in the <b>[bracketed]</b> part.</p>
       </section>
 
     </div><!-- /right col -->
