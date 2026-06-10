@@ -24,7 +24,6 @@ OPT = ("name,permalink_url,due_on,start_on,projects.name,memberships.project.nam
        "parent.parent.projects.name,custom_fields.name,custom_fields.display_value,"
        "custom_fields.number_value")
 
-# ---------------------------------------------------------------- Asana fetch
 def api_get(token, path, params):
     url = API + path + "?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token})
@@ -55,7 +54,6 @@ def fetch_tasks(token, workspace):
     return tasks
 
 def fetch_portfolio_map(token, workspace):
-    """Returns {project_name: portfolio_name}. Best-effort; empty on failure."""
     pmap = {}
     try:
         ports = api_get(token, "/portfolios",
@@ -69,7 +67,6 @@ def fetch_portfolio_map(token, workspace):
         print("portfolio map unavailable:", e)
     return pmap
 
-# ---------------------------------------------------------------- derive
 def datekey(v):
     return str(v)[:10] if v else None
 
@@ -91,19 +88,19 @@ def proj_of(node):
     return proj_of(node.get("parent"))
 
 def derive(task, portmap):
-    duecf   = cf(task, lambda n: n.lower().startswith("due date"))
+    duecf = cf(task, lambda n: n.lower().startswith("due date"))
     startcf = cf(task, lambda n: n.lower().startswith("start date"))
-    estcf   = cf(task, lambda n: re.match(r"est\.?\s*hrs", n, re.I))
-    pctcf   = cf(task, lambda n: re.match(r"%\s*done", n, re.I))
+    estcf = cf(task, lambda n: re.match(r"est\.?\s*hrs", n, re.I))
+    pctcf = cf(task, lambda n: re.match(r"%\s*done", n, re.I))
     project = proj_of(task) or "No Project"
-    parent  = (task.get("parent") or {}).get("name")
+    parent = (task.get("parent") or {}).get("name")
     return {
         "name": (task.get("name") or "").strip(),
-        "url":  task.get("permalink_url"),
+        "url": task.get("permalink_url"),
         "start": datekey(startcf.get("display_value") if startcf else None),
-        "due":   datekey(duecf.get("display_value") if duecf else None),
-        "est":  (estcf.get("number_value") if estcf else None),
-        "pct":  (pctcf.get("number_value") if pctcf else None),
+        "due": datekey(duecf.get("display_value") if duecf else None),
+        "est": (estcf.get("number_value") if estcf else None),
+        "pct": (pctcf.get("number_value") if pctcf else None),
         "project": project,
         "portfolio": portmap.get(project),
         "parent": (parent or None),
@@ -112,12 +109,11 @@ def derive(task, portmap):
 def build_data(tasks, today, portmap):
     rows = [derive(t, portmap) for t in tasks if (t.get("name") or "").strip()]
     return {
-        "pastDue":    [r for r in rows if r["due"] and r["due"] < today],
-        "dueToday":   [r for r in rows if r["due"] == today],
+        "pastDue": [r for r in rows if r["due"] and r["due"] < today],
+        "dueToday": [r for r in rows if r["due"] == today],
         "inProgress": [r for r in rows if r["start"] and r["start"] <= today],
     }
 
-# ---------------------------------------------------------------- render / inject
 CSS = """
   /* ---------- My Tasks (Asana dashboard) ---------- */
   #mytasks .mt-section{margin-top:20px;}
@@ -218,13 +214,11 @@ def render(base_html, data, today, repo_slug="YOUR-USERNAME/YOUR-REPO"):
     t = t.replace("</body>", script + "\n</body>", 1)
     return t
 
-# ---------------------------------------------------------------- main
 def main():
     token = os.environ["ASANA_TOKEN"]
     tz = os.environ.get("DASHBOARD_TZ", "America/New_York")
     today = datetime.datetime.now(ZoneInfo(tz)).date().isoformat()
-    repo_slug = (os.environ.get("GITHUB_REPOSITORY")
-                 or os.environ.get("REPO_SLUG", "")).strip() or "YOUR-USERNAME/YOUR-REPO"
+    repo_slug = (os.environ.get("GITHUB_REPOSITORY") or os.environ.get("REPO_SLUG", "")).strip() or "YOUR-USERNAME/YOUR-REPO"
     workspace = get_workspace(token)
     portmap = fetch_portfolio_map(token, workspace)
     tasks = fetch_tasks(token, workspace)
@@ -234,5 +228,8 @@ def main():
     html = render(base_html, data, today, repo_slug)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"Wrote {OUT}: {today} | past {len(data['pastDue'])} "
-          f"due {len(data['dueTo
+    counts = "past " + str(len(data["pastDue"])) + " due " + str(len(data["dueToday"])) + " inprog " + str(len(data["inProgress"]))
+    print("Wrote " + OUT + " for " + today + " | " + counts + " | portfolios " + str(len(portmap)))
+
+if __name__ == "__main__":
+    main()
