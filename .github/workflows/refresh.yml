@@ -6,6 +6,10 @@ on:
     - cron: "0 11 * * *"
   workflow_dispatch: {}   # lets you run it on demand from the Actions tab
 
+# Run the JS-based actions on Node 24 to silence the Node 20 deprecation warning.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 permissions:
   contents: write          # allow the job to commit the rebuilt index.html
 
