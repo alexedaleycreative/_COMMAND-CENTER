@@ -104,10 +104,10 @@
     border-bottom:1px dashed var(--line);padding-bottom:14px;margin-bottom:16px;
   }
   .block-icon{
-    width:46px;height:46px;flex:none;
+    width:26px;height:26px;flex:none;
     display:flex;align-items:center;justify-content:center;
   }
-  .block-icon svg{width:42px;height:42px;fill:var(--ink);stroke:none;}
+  .block-icon svg{width:24px;height:24px;fill:var(--ink);stroke:none;}
   .block h2{
     margin:0;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
     font-size:13.5px;color:var(--teal);
@@ -325,41 +325,15 @@
     .palette{grid-template-columns:repeat(3,1fr);}
     .fonts,.jobs{grid-template-columns:1fr;}
   }
-
-  /* ---------- My Tasks (Asana dashboard) ---------- */
-  #mytasks .mt-section{margin-top:20px;}
-  #mytasks .mt-section:first-child{margin-top:2px;}
-  #mytasks .mt-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-  #mytasks .mt-head h3{margin:0;font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);}
-  #mytasks .mt-dot{width:9px;height:9px;border-radius:50%;flex:none;}
-  #mytasks .mt-badge{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--tint);color:var(--muted);}
-  #mytasks .mt-past .mt-dot{background:#E23B2E;}
-  #mytasks .mt-due .mt-dot{background:#0171BF;}
-  #mytasks .mt-prog .mt-dot{background:#00B050;}
-  #mytasks .mt-cards{display:flex;flex-direction:column;gap:12px;}
-  #mytasks .mt-card{background:#fff;border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:var(--shadow);}
-  #mytasks .mt-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;font-weight:600;font-size:12.5px;letter-spacing:.01em;background:#fafbfc;color:var(--ink);border-bottom:1px solid var(--line);}
-  #mytasks .mt-proj{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  #mytasks .mt-tag{flex:none;font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.55);white-space:nowrap;}
-  #mytasks table{width:100%;border-collapse:collapse;font-size:12.5px;}
-  #mytasks thead th{text-align:left;font-weight:500;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;padding:8px 13px;border-bottom:1px solid var(--line);}
-  #mytasks tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;}
-  #mytasks tbody tr:last-child td{border-bottom:none;}
-  #mytasks th.mt-num,#mytasks td.mt-num{text-align:center;}
-  #mytasks thead th:nth-child(2),#mytasks thead th:nth-child(3){text-align:center;}
-  #mytasks tr.mt-sub td.mt-dt,#mytasks tr.mt-sub td.mt-num{padding-top:26px;}
-  #mytasks td.mt-num{vertical-align:top;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;color:var(--muted);}
-  #mytasks .mt-parent{font-size:11px;font-weight:400;color:var(--muted);line-height:1.3;margin-bottom:3px;}
-  #mytasks .mt-name a{color:var(--ink);font-weight:500;}
-  #mytasks .mt-name a:hover{color:var(--teal);text-decoration:underline;}
-  #mytasks .mt-dt{white-space:nowrap;color:var(--muted);font-weight:500;text-align:center;}
-  #mytasks .mt-dt.start-today{color:#1f8a4c;}
-  #mytasks .mt-dt.due-today{color:#E23B2E;}
-  #mytasks .mt-muted{color:#b9c0c1;font-weight:500;}
-  #mytasks .mt-empty{color:var(--muted);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:14px;text-align:center;}
-  #mytasks .mt-refresh{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--teal);border:1px solid var(--line);border-radius:8px;padding:5px 10px;transition:.15s;white-space:nowrap;align-self:flex-start;}
-  #mytasks .mt-refresh:hover{background:var(--tint);border-color:var(--teal);text-decoration:none;}
-  #mytasks .mt-refresh svg{width:13px;height:13px;fill:var(--teal);}
+  .cal-event-btn{
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    width:100%;margin-top:18px;padding:13px 18px;
+    background:var(--teal);color:#fff;border-radius:11px;
+    font-family:'Jost',sans-serif;font-weight:500;font-size:14px;letter-spacing:.04em;
+    transition:.18s;
+  }
+  .cal-event-btn:hover{background:#02525f;text-decoration:none;color:#fff;}
+  .cal-event-btn svg{width:18px;height:18px;flex:none;fill:#fff;}
 </style>
 </head>
 <body>
@@ -467,6 +441,7 @@
           <button class="skill-chip" onclick="copyText('Write my participation log for this week: [what I did]',this)">fsu-participation-log <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
           <button class="skill-chip" onclick="copyText('Write my weekly reflection (DBLB): [paste my post + classmate responses]',this)">fsu-reflection-post <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
         </div>
+        <p class="proc-note">Click a skill to copy its trigger phrase, then paste it into the matching Claude project and fill in the <b>[bracketed]</b> part.</p>
         <a class="brand-feature" href="https://1drv.ms/f/c/cc839e3a35a19644/IgCcye9kRsEbT7SRShKcHKP9AZMi2jcimuBpecFZNN4D3H4?e=MDgStW" target="_blank" rel="noopener" title="Knowledgebase — learning-design reference library">
           <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
           Knowledgebase
@@ -482,31 +457,6 @@
         <div class="chips">
           <a class="skill-chip" href="https://claude.ai/project/019d3b87-2a48-73f6-896b-0246ee10772f" target="_blank" rel="noopener">Mental Health First Aid &amp; Stigma Training Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
           <a class="skill-chip" href="https://claude.ai/project/019c96c7-a9a7-7344-9c90-1466b2cbae36" target="_blank" rel="noopener">Pressure Points Game Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-        </div>
-      </section>
-
-      <!-- MEMOIR -->
-      <section class="block" id="memoir">
-        <div class="block-head">
-          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg></div>
-          <div><h2>Memoir</h2><p class="sub">Writing project and skills</p></div>
-        </div>
-        <div class="chips">
-          <button class="skill-chip" onclick="copyText('Evaluate this memoir scene: [paste scene]',this)">memoir-scene-evaluator <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <button class="skill-chip" onclick="copyText('Write a scene for my memoir: [describe the scene]',this)">memoir-scene-writer <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <button class="skill-chip" onclick="copyText('Summarize this scene for my storyboard and suggest chapter titles: [paste scene]',this)">memoir-storyboard-summary <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          <a class="skill-chip" href="https://claude.ai/project/019ae643-746a-70f9-bbc4-fd7b45937f49" target="_blank" rel="noopener">My Memoir Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-          <a class="skill-chip" href="https://1drv.ms/f/c/cc839e3a35a19644/AkSWoTU6noMggMzeCAAAAAA?e=iBgddJ" target="_blank" rel="noopener">My Memoir Files <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-        </div>
-        <div class="brand-feature-row" style="display:flex;gap:10px;margin:18px 0 0;">
-          <a class="brand-feature" style="flex:1;width:auto;margin:0;" href="https://1drv.ms/w/c/cc839e3a35a19644/AQRSztQFacNGueFLFX-YM74?e=NVWlk1" target="_blank" rel="noopener" title="Memoir Manuscript (Word document)">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-            Memoir Manuscript
-          </a>
-          <a class="brand-feature" style="flex:1;width:auto;margin:0;" href="https://1drv.ms/w/c/cc839e3a35a19644/Adg0jT0Z6kBBsKdBH_JsNXI?e=hTvr1B" target="_blank" rel="noopener" title="Memoir Storyboard (Word document)">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-            Memoir Storyboard
-          </a>
         </div>
       </section>
 
@@ -530,6 +480,7 @@
         </div>
         <div class="client-meta">
           <div><span class="ml">Contract End Date</span><span class="mv">April 2027</span></div>
+          <div><span class="ml">Rate</span><span class="mv">$46/HR</span></div>
           <div><span class="ml">Taxes</span><span class="mv">W2</span></div>
           <div><span class="ml">Pay Frequency</span><span class="mv">Weekly</span></div>
         </div>
@@ -550,11 +501,11 @@
           </div>
         </div>
         <div class="client-note client-note--col note-orange">
-          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> record your hours-per-project in the Hours Tracker, submit your timesheet in Fieldglass Time Tracking, and generate project status reports in the Project Tracker.</span></div>
+          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> record your hours-per-project in the Hours Tracker, submit your timesheet in SAP Fieldglass, and generate project status reports in the Project Tracker.</span></div>
           <div class="track-list">
-            <div class="track-item"><input type="checkbox"><a href="https://www.us.fieldglass.cloud.sap/worker_desktop.do" target="_blank" rel="noopener">Fieldglass Time Tracking</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://brightspeed.sharepoint.com/:x:/r/sites/OperationsTraining/_layouts/15/Doc.aspx?sourcedoc=%7B0FBF09AC-167D-436E-934E-4FCA68D17080%7D&file=2026%20Field%20Ops%20ISD%20Hours%20Tracker.xlsx&action=default&mobileredirect=true" target="_blank" rel="noopener">Hours Tracker</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://app.asana.com/0/1209849184055836/overview" target="_blank" rel="noopener">Project Tracker</a></div>
+            <div class="track-item"><input type="checkbox"><a href="https://www.us.fieldglass.cloud.sap/worker_desktop.do" target="_blank" rel="noopener">SAP Fieldglass</a></div>
           </div>
         </div>
 
@@ -569,6 +520,7 @@
         </div>
         <div class="client-meta">
           <div><span class="ml">Contract End Date</span><span class="mv">December 2026</span></div>
+          <div><span class="ml">Rate</span><span class="mv">$70/HR</span></div>
           <div><span class="ml">Taxes</span><span class="mv">C2C</span></div>
           <div><span class="ml">Pay Frequency</span><span class="mv">Net30</span></div>
         </div>
@@ -591,24 +543,14 @@
         <div class="client-note client-note--col note-purple">
           <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> submit your timesheet in LGWS, and generate project status reports in the Project Tracker.</span></div>
           <div class="track-list">
-            <div class="track-item"><input type="checkbox"><span class="track-pending">Cyclotron Time Tracking</span></div>
-            <div class="track-item"><input type="checkbox"><a href="https://portal.leadandgain.com/#Home" target="_blank" rel="noopener">LGWS Time Tracking</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://app.asana.com/1/1215562334874991/home" target="_blank" rel="noopener">Project Tracker</a></div>
+            <div class="track-item"><input type="checkbox"><a href="https://portal.leadandgain.com/#Home" target="_blank" rel="noopener">LGWS Time Tracking</a></div>
+            <div class="track-item"><input type="checkbox"><span class="track-pending">Cyclotron Time Tracking</span></div>
           </div>
         </div>
-        <a class="brand-feature" style="margin:18px 0 0;" href="file:///C:/Users/alexa/OneDrive/Documents/Claude/Artifacts/calendar-sync-wizard.html" target="_blank" rel="noopener">
+        <a class="cal-event-btn" href="file:///C:/Users/alexa/OneDrive/Documents/Claude/Artifacts/calendar-sync-wizard.html" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm8 5h-2v2H9v2h2v2h2v-2h2v-2h-2z"/></svg>Create a Calendar Event
         </a>
-      </section>
-
-      <!-- MY TASKS (Asana) -->
-      <section class="block" id="mytasks">
-        <div class="block-head">
-          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
-          <div><h2>My Tasks</h2><p class="sub">From Asana &middot; grouped by project &middot; click a task to open it<span id="mt-stamp"></span></p></div>
-          <a class="mt-refresh" href="https://github.com/alexedaleycreative/_COMMAND-CENTER/actions/workflows/refresh.yml" target="_blank" rel="noopener" title="Open GitHub Actions, then click Run workflow to refresh now"><svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>Refresh</a>
-        </div>
-        <div id="mytasksBody"></div>
       </section>
 
       <!-- WORK SEARCH -->
@@ -631,6 +573,22 @@
           </div>
         </div>
       </section>
+
+      <!-- MEMOIR -->
+      <section class="block" id="memoir">
+        <div class="block-head">
+          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg></div>
+          <div><h2>Memoir</h2><p class="sub">Writing project and skills</p></div>
+        </div>
+        <div class="chips">
+          <button class="skill-chip" onclick="copyText('Evaluate this memoir scene: [paste scene]',this)">memoir-scene-evaluator <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <button class="skill-chip" onclick="copyText('Write a scene for my memoir: [describe the scene]',this)">memoir-scene-writer <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <button class="skill-chip" onclick="copyText('Summarize this scene for my storyboard and suggest chapter titles: [paste scene]',this)">memoir-storyboard-summary <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
+          <a class="skill-chip" href="https://claude.ai/project/019ae643-746a-70f9-bbc4-fd7b45937f49" target="_blank" rel="noopener">My Memoir Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
+        </div>
+        <p class="proc-note">Click a skill to copy its trigger phrase, then paste it into the matching Claude project and fill in the <b>[bracketed]</b> part.</p>
+      </section>
+
     </div><!-- /right col -->
   </div>
 
@@ -775,55 +733,5 @@ JOBS.forEach(([name,url,icon])=>{
 });
 
 </script>
-
-<script>
-/* ---- My Tasks (Asana) ---- */
-(function(){
-  var MY_TASKS_DATE = "2026-06-14";
-  var MY_TASKS_DATA = {"pastDue": [], "dueToday": [], "inProgress": [{"name": "Learning Solution", "url": "https://app.asana.com/1/32489573765783/project/1214975437716299/task/1214947916126873", "start": "2026-06-10", "due": "2026-06-30", "est": null, "pct": 0, "project": "FTTxx00 Static IP", "portfolio": "Brightspeed", "parent": null}, {"name": "Design and deliver Course 1 Presentation: Navigating and Using Automate", "url": "https://app.asana.com/1/32489573765783/project/1214711975354621/task/1215034446800436", "start": "2026-06-01", "due": "2026-06-19", "est": 25.5, "pct": 0.1, "project": "TSR84801 NPD Reduction", "portfolio": "Brightspeed", "parent": null}]};
-  var PC = {"TSR84801 NPD Reduction":"#FA783C","FTTxx00 Static IP":"#0171BF","BSF Install Health Certificate":"#00B050"};
-  var PORTCOL = {"Brightspeed":"#E8731E","Cyclotron":"#5B53C9"};
-  var FB = ["#FCC800","#FA4628","#E6E7E8"]; var asg = {}; var fi = 0;
-  function colorFor(n){ if(PC[n]) return PC[n]; if(!asg[n]){ asg[n]=FB[fi%FB.length]; fi++; } return asg[n]; }
-  function textOn(hex){ var h=hex.replace('#',''); function c(i){return parseInt(h.substr(i,2),16)/255;} function L(x){return x<=0.03928?x/12.92:Math.pow((x+0.055)/1.055,2.4);} var l=0.2126*L(c(0))+0.7152*L(c(2))+0.0722*L(c(4)); return l>0.45?'#0d1719':'#ffffff'; }
-  function fmt(k){ if(!k) return null; var p=k.split('-'); return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
-  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-  function tag(p){ if(!p) return ''; var c=PORTCOL[p]||'#5c6c6f'; return '<span class="mt-tag" style="background:'+c+';color:#fff">'+esc(p)+'</span>'; }
-  function dt(k,type){ if(!k) return '<td class="mt-dt mt-muted">\u2014</td>'; var cls='mt-dt'; if(k===MY_TASKS_DATE) cls = type==='start' ? 'mt-dt start-today' : 'mt-dt due-today'; return '<td class="'+cls+'">'+fmt(k)+'</td>'; }
-  function group(arr){ var g={}; arr.forEach(function(t){ (g[t.project]=g[t.project]||[]).push(t); }); return Object.keys(g).sort(function(a,b){return a.localeCompare(b);}).map(function(p){ return {project:p, portfolio:g[p][0].portfolio, tasks:g[p].sort(function(a,b){return a.name.localeCompare(b.name);})}; }); }
-  function cards(arr){
-    if(!arr.length) return '<div class="mt-empty">No tasks here right now.</div>';
-    return '<div class="mt-cards">'+group(arr).map(function(gp){
-      var rows=gp.tasks.map(function(t){
-        var nameCell = (t.parent ? '<div class="mt-parent">\u21b3 '+esc(t.parent)+'</div>' : '')
-          + '<a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.name)+'</a>';
-        return '<tr'+(t.parent?' class="mt-sub"':'')+'><td class="mt-name">'+nameCell+'</td>'
-          + dt(t.start,'start') + dt(t.due,'due')
-          + '<td class="mt-num">'+(t.est!=null?t.est:'<span class="mt-muted">\u2014</span>')+'</td>'
-          + '<td class="mt-num">'+(t.pct!=null?Math.round(t.pct*100)+'%':'<span class="mt-muted">\u2014</span>')+'</td></tr>';
-      }).join('');
-      return '<div class="mt-card"><div class="mt-card-head"><span class="mt-proj">'+esc(gp.project)+'</span>'+tag(gp.portfolio)+'</div>'
-        + '<table><thead><tr><th>Task</th><th>Start</th><th>Due</th><th class="mt-num">Est Hrs</th><th class="mt-num">% Done</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
-    }).join('')+'</div>';
-  }
-  function sec(cls,label,arr){ return '<div class="mt-section '+cls+'"><div class="mt-head"><span class="mt-dot"></span><h3>'+label+'</h3><span class="mt-badge">'+arr.length+'</span></div>'+cards(arr)+'</div>'; }
-  // Enforce one-bucket-per-task: priority Past Due > Due Today > In Progress.
-  // (A task due today or past due never also appears under In Progress.)
-  var _all = [].concat(MY_TASKS_DATA.pastDue||[], MY_TASKS_DATA.dueToday||[], MY_TASKS_DATA.inProgress||[]);
-  var _seen = {}, _uniq = [];
-  _all.forEach(function(t){ var k = t.url || t.name; if(!_seen[k]){ _seen[k]=1; _uniq.push(t); } });
-  var _T = MY_TASKS_DATE;
-  var BUCKETS = {
-    pastDue:    _uniq.filter(function(t){ return t.due && t.due < _T; }),
-    dueToday:   _uniq.filter(function(t){ return t.due === _T; }),
-    inProgress: _uniq.filter(function(t){ return t.start && t.start <= _T && !(t.due && t.due < _T) && t.due !== _T; })
-  };
-  var el=document.getElementById('mytasksBody');
-  if(el){ el.innerHTML = sec('mt-past','Past Due',BUCKETS.pastDue) + sec('mt-due','Due Today',BUCKETS.dueToday) + sec('mt-prog','In Progress',BUCKETS.inProgress); }
-  var st=document.getElementById('mt-stamp');
-  if(st){ var p=MY_TASKS_DATE.split('-'); st.textContent=' \u00b7 updated '+new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
-})();
-</script>
-
 </body>
 </html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Asana Task Dashboard",
+  "schemaVersion": 1,
+  "description": "Live dashboard of my assigned Asana tasks. Three mutually exclusive sections — Past Due, Due Today, and In Progress — with each task placed in exactly one section by priority (Past Due > Due Today > In Progress). Grouped by project and alphabetized, showing Name, Start Date, Due Date, Est. Hrs, and % Done. Dates and hours are read from Asana custom fields by name.",
+  "mcpTools": [
+    "mcp__74d4b4f2-e611-4015-bbb7-d3e731376dce__search_tasks"
+  ],
+  "mcpServerNames": [
+    "Asana"
+  ]
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Task Dashboard</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1d2127;
+  line-height: 1.45;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+header h1 { font-size: 22px; margin: 0 0 4px; font-weight: 700; }
+header .sub { color: #6b7280; font-size: 13px; margin-bottom: 24px; }
+.section { margin-bottom: 36px; }
+.section-head {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 14px;
+}
+.section-head h2 { font-size: 16px; margin: 0; font-weight: 700; }
+.badge {
+  font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  background: #e5e7eb; color: #374151;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.past .dot { background: #e0492f; }
+.due .dot { background: #2f7de0; }
+.prog .dot { background: #16a34a; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+.card {
+  background: #fff; border: 1px solid #e6e8eb; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16,24,40,.04); overflow: hidden;
+}
+.card-head {
+  padding: 11px 14px; font-weight: 700; font-size: 13px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left; font-weight: 600; color: #8a909a; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .03em; padding: 8px 14px; border-bottom: 1px solid #eef0f2;
+}
+td { padding: 9px 14px; border-bottom: 1px solid #f1f2f4; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+.tname { font-weight: 600; color: #1d2127; }
+.dt { white-space: nowrap; color: #4b5563; }
+.dt.due-today { color: #e0492f; font-weight: 700; }
+.dt.start-today { color: #15803d; font-weight: 700; }
+.hrs { text-align: right; font-variant-numeric: tabular-nums; }
+.muted { color: #c2c7ce; }
+.empty { color: #6b7280; font-size: 13px; background: #fff; border: 1px dashed #d8dbdf; border-radius: 12px; padding: 22px; text-align: center; }
+.cols-hrs { width: 66px; }
+.cols-pct { width: 66px; }
+.cols-dt { width: 90px; }
+.err { background: #fde8e6; border: 1px solid #f3b4ab; color: #9b261a; padding: 14px 16px; border-radius: 10px; font-size: 13px; }
+.loading { color: #6b7280; font-size: 14px; padding: 30px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>My Task Dashboard</h1>
+    <div class="sub" id="subline">Live from Asana</div>
+  </header>
+  <div id="root"><div class="loading">Loading your tasks…</div></div>
+</div>
+
+<script>
+const ASANA = "mcp__74d4b4f2-e611-4015-bbb7-d3e731376dce__search_tasks";
+
+// ---- project colors ----
+const PROJECT_COLORS = {
+  "TSR84801 NPD Reduction": "#FA783C",        // Approachable Orange
+  "FTTxx00 Static IP": "#0171BF",             // Safety Blue
+  "BSF Install Health Certificate": "#00B050" // Safety Green
+};
+const FALLBACK_PALETTE = ["#FCC800", "#FA4628", "#E6E7E8"]; // Bright Yellow, Bold Orange, Reliable Gray
+const _assigned = {};
+let _fbIdx = 0;
+function colorFor(name) {
+  if (PROJECT_COLORS[name]) return PROJECT_COLORS[name];
+  if (!_assigned[name]) { _assigned[name] = FALLBACK_PALETTE[_fbIdx % FALLBACK_PALETTE.length]; _fbIdx++; }
+  return _assigned[name];
+}
+function textOn(hex) {
+  const h = hex.replace("#", "");
+  const ch = i => parseInt(h.substr(i, 2), 16) / 255;
+  const lin = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const L = 0.2126 * lin(ch(0)) + 0.7152 * lin(ch(2)) + 0.0722 * lin(ch(4));
+  return L > 0.45 ? "#1d2127" : "#ffffff";
+}
+
+// ---- date helpers (local, no timezone drift) ----
+function todayStr() {
+  const d = new Date();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+function dateKey(v) {
+  // Accepts "2026-06-30T00:00:00.000Z" or "2026-06-30" -> "2026-06-30"
+  if (!v) return null;
+  const m = String(v).match(/^(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : null;
+}
+function fmt(key) {
+  if (!key) return null;
+  const [y, m, d] = key.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+// ---- pull a custom field value by fuzzy name match ----
+function cf(task, predicate) {
+  const list = task.custom_fields || [];
+  return list.find(f => predicate((f.name || "").trim()));
+}
+// resolve a project name, walking up the subtask -> parent chain
+function projectName(node) {
+  if (!node) return null;
+  const direct = (node.projects && node.projects[0] && node.projects[0].name)
+    || (node.memberships && node.memberships[0] && node.memberships[0].project && node.memberships[0].project.name);
+  return direct || projectName(node.parent);
+}
+function deriveDates(task) {
+  const dueCf = cf(task, n => /^due date/i.test(n));
+  const startCf = cf(task, n => /^start date/i.test(n));
+  const estCf = cf(task, n => /^est\.?\s*hrs/i.test(n));
+  const pctCf = cf(task, n => /^%\s*done/i.test(n));
+  // Use ONLY the "Due Date:" / "Start Date:" custom fields (ignore Asana's
+  // native due_on/start_on, which carries stale dates and system reminders).
+  const due = dateKey(dueCf && dueCf.display_value);
+  const start = dateKey(startCf && startCf.display_value);
+  let est = null;
+  if (estCf) est = (estCf.number_value != null) ? estCf.number_value : null;
+  let pct = null;
+  if (pctCf) pct = (pctCf.number_value != null) ? pctCf.number_value : null;
+  const proj = projectName(task) || "No Project";
+  return { name: (task.name || "").trim(), start, due, est, pct, project: proj };
+}
+
+async function fetchAll() {
+  const r = await window.cowork.callMcpTool(ASANA, {
+    assignee_any: "me",
+    completed: false,
+    limit: 100,
+    opt_fields: "name,due_on,start_on,projects.name,memberships.project.name,parent.name,parent.projects.name,parent.memberships.project.name,parent.parent.projects.name,custom_fields.name,custom_fields.display_value,custom_fields.number_value"
+  });
+  if (r.isError) throw new Error((r.content && r.content[0] && r.content[0].text) || "Asana request failed");
+  const payload = r.structuredContent ?? JSON.parse(r.content[0].text);
+  return (payload.data || []).map(deriveDates);
+}
+
+function groupByProject(tasks) {
+  const groups = {};
+  tasks.forEach(t => { (groups[t.project] = groups[t.project] || []).push(t); });
+  return Object.keys(groups).sort((a, b) => a.localeCompare(b)).map(proj => ({
+    project: proj,
+    tasks: groups[proj].sort((a, b) => a.name.localeCompare(b.name))
+  }));
+}
+
+function dtCell(key, today, type) {
+  if (!key) return '<td class="dt muted">—</td>';
+  let cls = "dt";
+  if (key === today) cls = type === "start" ? "dt start-today" : "dt due-today";
+  return `<td class="${cls}">${fmt(key)}</td>`;
+}
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
+
+function renderSection(groups, today) {
+  if (!groups.length) return '<div class="empty">No tasks here right now.</div>';
+  return '<div class="cards">' + groups.map(g => {
+    const color = colorFor(g.project);
+    const txt = textOn(color);
+    const rows = g.tasks.map(t => `
+      <tr>
+        <td class="tname">${esc(t.name)}</td>
+        ${dtCell(t.start, today, "start")}
+        ${dtCell(t.due, today, "due")}
+        <td class="hrs">${t.est != null ? t.est : '<span class="muted">—</span>'}</td>
+        <td class="hrs">${t.pct != null ? Math.round(t.pct * 100) + '%' : '<span class="muted">—</span>'}</td>
+      </tr>`).join("");
+    return `<div class="card" style="border-left:5px solid ${color}">
+      <div class="card-head" style="background:${color};color:${txt}">${esc(g.project)}</div>
+      <table>
+        <thead><tr><th>Name</th><th class="cols-dt">Start</th><th class="cols-dt">Due</th><th class="cols-hrs">Est. Hrs</th><th class="cols-pct">% Done</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join("") + '</div>';
+}
+
+async function init() {
+  const root = document.getElementById("root");
+  try {
+    const today = todayStr();
+    const tasks = await fetchAll();
+
+    // Each task appears in exactly ONE section.
+    // Priority: Past Due > Due Today > In Progress.
+    const pastDue = tasks.filter(t => t.due && t.due < today);
+    const dueToday = tasks.filter(t => t.due === today);
+    const inProgress = tasks.filter(t =>
+      t.start && t.start <= today &&        // started
+      !(t.due && t.due < today) &&          // not past due
+      t.due !== today                       // not due today
+    );
+
+    const pastGroups = groupByProject(pastDue);
+    const dueGroups = groupByProject(dueToday);
+    const progGroups = groupByProject(inProgress);
+
+    document.getElementById("subline").textContent =
+      `Live from Asana · ${fmt(today)} · ${tasks.length} open tasks`;
+
+    root.innerHTML = `
+      <div class="section past">
+        <div class="section-head"><span class="dot"></span><h2>Past Due</h2><span class="badge">${pastDue.length}</span></div>
+        ${renderSection(pastGroups, today)}
+      </div>
+      <div class="section due">
+        <div class="section-head"><span class="dot"></span><h2>Due Today</h2><span class="badge">${dueToday.length}</span></div>
+        ${renderSection(dueGroups, today)}
+      </div>
+      <div class="section prog">
+        <div class="section-head"><span class="dot"></span><h2>In Progress</h2><span class="badge">${inProgress.length}</span></div>
+        ${renderSection(progGroups, today)}
+      </div>`;
+  } catch (e) {
+    root.innerHTML = `<div class="err"><strong>Couldn't load tasks.</strong><br>${esc(e.message || e)}</div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>
