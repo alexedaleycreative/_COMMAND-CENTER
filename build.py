@@ -151,6 +151,9 @@ CSS = """
   #mytasks .mt-dt{white-space:nowrap;color:var(--muted);font-weight:500;text-align:center;}
   #mytasks .mt-dt.start-today{color:#1f8a4c;}
   #mytasks .mt-dt.due-today{color:#E23B2E;}
+  #mytasks .mt-dt.dcol-black{color:#0d1719;}
+  #mytasks .mt-dt.dcol-red{color:#E23B2E;}
+  #mytasks .mt-dt.dcol-green{color:#1f8a4c;}
   #mytasks .mt-muted{color:#b9c0c1;font-weight:500;}
   #mytasks .mt-empty{color:var(--muted);font-size:12.5px;border:1px dashed var(--line);border-radius:10px;padding:14px;text-align:center;}
   #mytasks .mt-refresh{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--teal);border:1px solid var(--line);border-radius:8px;padding:5px 10px;transition:.15s;white-space:nowrap;align-self:flex-start;}
@@ -183,16 +186,16 @@ SCRIPT = """
   function fmt(k){ if(!k) return null; var p=k.split('-'); return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function tag(p){ if(!p) return ''; var c=PORTCOL[p]||'#5c6c6f'; return '<span class="mt-tag" style="background:'+c+';color:#fff">'+esc(p)+'</span>'; }
-  function dt(k,type){ if(!k) return '<td class="mt-dt mt-muted">\\u2014</td>'; var cls='mt-dt'; if(k===MY_TASKS_DATE) cls = type==='start' ? 'mt-dt start-today' : 'mt-dt due-today'; return '<td class="'+cls+'">'+fmt(k)+'</td>'; }
+  function dt(k,type,bucket){ if(!k) return '<td class="mt-dt mt-muted">\\u2014</td>'; var cls='mt-dt'; if(bucket==='past'){ cls += (type==='due') ? ' dcol-red' : ' dcol-black'; } else if(bucket==='today'){ cls += (type==='due') ? ' dcol-green' : ' dcol-black'; } else if(k===MY_TASKS_DATE){ cls = type==='start' ? 'mt-dt start-today' : 'mt-dt due-today'; } return '<td class="'+cls+'">'+fmt(k)+'</td>'; }
   function group(arr){ var g={}; arr.forEach(function(t){ (g[t.project]=g[t.project]||[]).push(t); }); return Object.keys(g).sort(function(a,b){return a.localeCompare(b);}).map(function(p){ return {project:p, portfolio:g[p][0].portfolio, tasks:g[p].sort(function(a,b){return a.name.localeCompare(b.name);})}; }); }
-  function cards(arr){
+  function cards(arr,bucket){
     if(!arr.length) return '<div class="mt-empty">No tasks here right now.</div>';
     return '<div class="mt-cards">'+group(arr).map(function(gp){
       var rows=gp.tasks.map(function(t){
         var nameCell = (t.parent ? '<div class="mt-parent">\\u21b3 '+esc(t.parent)+'</div>' : '')
           + '<a href="'+esc(t.url)+'" target="_blank" rel="noopener">'+esc(t.name)+'</a>';
         return '<tr'+(t.parent?' class="mt-sub"':'')+'><td class="mt-name">'+nameCell+'</td>'
-          + dt(t.start,'start') + dt(t.due,'due')
+          + dt(t.start,'start',bucket) + dt(t.due,'due',bucket)
           + '<td class="mt-num">'+(t.est!=null?t.est:'<span class="mt-muted">\\u2014</span>')+'</td>'
           + '<td class="mt-num">'+(t.pct!=null?Math.round(t.pct*100)+'%':'<span class="mt-muted">\\u2014</span>')+'</td></tr>';
       }).join('');
@@ -200,9 +203,9 @@ SCRIPT = """
         + '<table><thead><tr><th>Task</th><th>Start</th><th>Due</th><th class="mt-num">Est Hrs</th><th class="mt-num">% Done</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
     }).join('')+'</div>';
   }
-  function sec(cls,label,arr){ return '<div class="mt-section '+cls+'"><div class="mt-head"><span class="mt-dot"></span><h3>'+label+'</h3><span class="mt-badge">'+arr.length+'</span></div>'+cards(arr)+'</div>'; }
+  function sec(cls,label,arr,bucket){ return '<div class="mt-section '+cls+'"><div class="mt-head"><span class="mt-dot"></span><h3>'+label+'</h3><span class="mt-badge">'+arr.length+'</span></div>'+cards(arr,bucket)+'</div>'; }
   var el=document.getElementById('mytasksBody');
-  if(el){ el.innerHTML = sec('mt-past','Past Due',MY_TASKS_DATA.pastDue) + sec('mt-due','Due Today',MY_TASKS_DATA.dueToday) + sec('mt-prog','In Progress',MY_TASKS_DATA.inProgress); }
+  if(el){ el.innerHTML = sec('mt-past','Past Due',MY_TASKS_DATA.pastDue,'past') + sec('mt-due','Due Today',MY_TASKS_DATA.dueToday,'today') + sec('mt-prog','In Progress',MY_TASKS_DATA.inProgress,'prog'); }
   var st=document.getElementById('mt-stamp');
   if(st){ var p=MY_TASKS_DATE.split('-'); st.textContent=' \\u00b7 updated '+new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
 })();
