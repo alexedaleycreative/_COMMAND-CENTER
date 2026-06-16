@@ -108,11 +108,18 @@ def derive(task, portmap):
 
 def build_data(tasks, today, portmap):
     rows = [derive(t, portmap) for t in tasks if (t.get("name") or "").strip()]
-    return {
-        "pastDue": [r for r in rows if r["due"] and r["due"] < today],
-        "dueToday": [r for r in rows if r["due"] == today],
-        "inProgress": [r for r in rows if r["start"] and r["start"] <= today],
-    }
+    # Each task lands in exactly one bucket, by priority:
+    #   Past Due (due < today) > Due Today (due == today) > In Progress (started, not yet due).
+    pastDue, dueToday, inProgress = [], [], []
+    for r in rows:
+        if r["due"] and r["due"] < today:
+            pastDue.append(r)
+        elif r["due"] == today:
+            dueToday.append(r)
+        elif r["start"] and r["start"] <= today:
+            inProgress.append(r)
+        # else: not yet started / no qualifying date -> shown in no list
+    return {"pastDue": pastDue, "dueToday": dueToday, "inProgress": inProgress}
 
 CSS = """
   /* ---------- My Tasks (Asana dashboard) ---------- */

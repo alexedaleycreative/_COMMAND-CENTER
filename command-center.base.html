@@ -423,7 +423,6 @@
           <div><h2>Education</h2><p class="sub">FSU coursework and professional learning</p></div>
         </div>
         <div class="chips">
-          <a class="skill-chip" href="blog-production-wizard.html" target="_blank" rel="noopener">Blog Wizard <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
           <a class="skill-chip" href="https://claude.ai/project/019e520f-13d3-72dc-8d22-21fb6e29c886" target="_blank" rel="noopener">EME 6414 Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
           <a class="skill-chip" href="https://1drv.ms/f/c/cc839e3a35a19644/IgC8_DRYVBRzToERNXwWXj0FAYmIG2Eml9u3W7HePc9FhCQ?e=7jPXtp" target="_blank" rel="noopener">EME 6414 Files <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
           <button class="skill-chip" onclick="copyText('Write my weekly blog post: [paste notes / resource]',this)">fsu-blog-post <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
@@ -432,10 +431,16 @@
           <button class="skill-chip" onclick="copyText('Write my participation log for this week: [what I did]',this)">fsu-participation-log <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
           <button class="skill-chip" onclick="copyText('Write my weekly reflection (DBLB): [paste my post + classmate responses]',this)">fsu-reflection-post <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
         </div>
-        <a class="brand-feature" href="https://1drv.ms/f/c/cc839e3a35a19644/IgCcye9kRsEbT7SRShKcHKP9AZMi2jcimuBpecFZNN4D3H4?e=MDgStW" target="_blank" rel="noopener" title="Knowledgebase — learning-design reference library">
-          <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
-          Knowledgebase
-        </a>
+        <div class="brand-feature-row" style="display:flex;gap:10px;margin:18px 0;">
+          <a class="brand-feature" style="flex:1;width:auto;margin:0;" href="https://1drv.ms/f/c/cc839e3a35a19644/IgCcye9kRsEbT7SRShKcHKP9AZMi2jcimuBpecFZNN4D3H4?e=MDgStW" target="_blank" rel="noopener" title="Knowledgebase — learning-design reference library">
+            <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+            Knowledgebase
+          </a>
+          <a class="brand-feature" style="flex:1;width:auto;margin:0;" href="blog-production-wizard.html" title="Write a Blog Post — blog production wizard">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+            Write a Blog Post
+          </a>
+        </div>
       </section>
 
       <!-- MENTAL HEALTH PLATFORM -->
@@ -475,27 +480,6 @@
         </div>
       </section>
 
-      <!-- WORK SEARCH -->
-      <section class="block" id="worksearch">
-        <div class="block-head">
-          <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg></div>
-          <div><h2>Work Search</h2><p class="sub">Job boards and resume builders</p></div>
-        </div>
-        <div class="jobs" id="jobsGrid"></div>
-
-        <div class="proc-group" style="margin-top:18px">
-          <div class="pg-title">Tools</div>
-          <div class="chips">
-            <a class="skill-chip" href="https://1drv.ms/w/c/cc839e3a35a19644/IQBhvYyQrW6vS5yNmXX3FDz-AbKADNg8FEyo90lQU0027ec?e=BcuhCz" target="_blank" rel="noopener">Interview Guide <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-            <a class="skill-chip" href="https://claude.ai/project/019d26db-77f6-71eb-a918-f50114582448" target="_blank" rel="noopener">Job Search Claude Project <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-            <a class="skill-chip" href="https://1drv.ms/x/c/cc839e3a35a19644/IQBlcaTtGcj4Sb-OJtwwiPsJATukYioFfRjMabZ6nfsoqdo?e=JxNPgc" target="_blank" rel="noopener">Job Tracker <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg></a>
-            <button class="skill-chip" onclick="copyText('Evaluate this portfolio project: [paste URL]',this)">portfolio-project-evaluator <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-            <button class="skill-chip" onclick="copyText('Reply to this recruiter email on my behalf: [paste email]',this)">recruiter-reply <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-            <button class="skill-chip" onclick="copyText('Tailor my resume to this job description: [paste job posting]',this)">resume-tailor <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg></button>
-          </div>
-        </div>
-      </section>
-
     </div><!-- /left col -->
 
     <!-- ========== RIGHT COLUMN ========== -->
@@ -505,7 +489,7 @@
       <section class="block" id="clients">
         <div class="block-head">
           <div class="block-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-          <div><h2>Current Clients</h2><p class="sub">Active contracts and freelance projects</p></div>
+          <div><h2>Current Clients</h2><p class="sub">Start your day by opening this Command Center, your Project Tracker, and a timesheet per client.</p></div>
         </div>
         <div class="client">
           <div class="logo-sq"><img src="data:image/png;base64,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" alt="Brightspeed"></div>
@@ -536,11 +520,11 @@
           </div>
         </div>
         <div class="client-note client-note--col note-orange">
-          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> record your hours-per-project in the Hours Tracker, submit your timesheet in SAP Fieldglass, and generate project status reports in the Project Tracker.</span></div>
+          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> record your hours-per-project in the Hours Tracker, submit your timesheet in Brightspeed Time Tracking, and generate project status reports in the Project Tracker.</span></div>
           <div class="track-list">
+            <div class="track-item"><input type="checkbox"><a href="https://www.us.fieldglass.cloud.sap/worker_desktop.do" target="_blank" rel="noopener">Brightspeed Time Tracking</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://brightspeed.sharepoint.com/:x:/r/sites/OperationsTraining/_layouts/15/Doc.aspx?sourcedoc=%7B0FBF09AC-167D-436E-934E-4FCA68D17080%7D&file=2026%20Field%20Ops%20ISD%20Hours%20Tracker.xlsx&action=default&mobileredirect=true" target="_blank" rel="noopener">Hours Tracker</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://app.asana.com/0/1209849184055836/overview" target="_blank" rel="noopener">Project Tracker</a></div>
-            <div class="track-item"><input type="checkbox"><a href="https://www.us.fieldglass.cloud.sap/worker_desktop.do" target="_blank" rel="noopener">SAP Fieldglass</a></div>
           </div>
         </div>
 
@@ -575,15 +559,17 @@
           </div>
         </div>
         <div class="client-note client-note--col note-purple">
-          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> submit your timesheet in TBD, and generate project status reports in the Project Tracker.</span></div>
+          <div class="cn-line"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span><b>Every Friday:</b> submit your timesheet in LGWS, and generate project status reports in the Project Tracker.</span></div>
           <div class="track-list">
+            <div class="track-item"><input type="checkbox"><span class="track-pending">Cyclotron Time Tracking</span></div>
+            <div class="track-item"><input type="checkbox"><a href="https://portal.leadandgain.com/#Home" target="_blank" rel="noopener">LGWS Time Tracking</a></div>
             <div class="track-item"><input type="checkbox"><a href="https://app.asana.com/1/1215562334874991/home" target="_blank" rel="noopener">Project Tracker</a></div>
-            <div class="track-item"><input type="checkbox"><span class="track-pending">Time Tracking System</span></div>
           </div>
         </div>
-      </section>
-
-    </div><!-- /right col -->
+        <a class="brand-feature" style="margin:18px 0 0;" href="calendar-sync-wizard.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm8 5h-2v2H9v2h2v2h2v-2h2v-2h-2z"/></svg>Create a Calendar Event
+        </a>
+      </section>    </div><!-- /right col -->
   </div>
 
   <!-- TOOLS (full-width band) -->
@@ -727,5 +713,6 @@ JOBS.forEach(([name,url,icon])=>{
 });
 
 </script>
+
 </body>
 </html>
